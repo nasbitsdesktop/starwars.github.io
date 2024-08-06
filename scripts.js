@@ -1,6 +1,6 @@
-// scripts.js
-const sentences = [
-   "Do or do not. There is no try. - Yoda",
+document.addEventListener('DOMContentLoaded', function() {
+    const quotes = [
+         "Do or do not. There is no try. - Yoda",
             "The Force will be with you, always. - Obi-Wan Kenobi",
             "May the Force be with you. - Multiple characters",
             "Help me, Obi-Wan Kenobi. You're my only hope. - Princess Leia",
@@ -83,47 +83,19 @@ const sentences = [
             "The Force is strong with you, young Skywalker. - Obi-Wan Kenobi",
             "You must learn to control your anger, young Skywalker. If you give into it, you will be destroyed. - Yoda",
             "The path to the Dark Side is quick and easy. - Darth Sidious"
-];
+    ];
 
-function getRandomSentence() {
-    const randomIndex = Math.floor(Math.random() * sentences.length);
-    return sentences[randomIndex];
-}
-
-function animateWordCloud() {
+    let currentIndex = 0;
     const wordCloud = document.getElementById('word-cloud');
-    const sentence = getRandomSentence();
 
-    // Clear previous content
-    wordCloud.innerHTML = '';
+    function displayNextQuote() {
+        wordCloud.textContent = quotes[currentIndex];
+        currentIndex = (currentIndex + 1) % quotes.length;
+    }
 
-    // Create a new span element for the sentence
-    const span = document.createElement('span');
-    span.textContent = sentence;
+    // Display the first quote immediately
+    displayNextQuote();
 
-    // Apply initial styles
-    span.style.opacity = 0;
-    span.style.position = 'absolute';
-    span.style.fontSize = '24px';
-    span.style.transition = 'opacity 1s ease-in-out, transform 1s ease-in-out';
-
-    // Append the span to the word cloud
-    wordCloud.appendChild(span);
-
-    // Set a timeout to animate the opacity and transform properties
-    setTimeout(() => {
-        span.style.opacity = 1;
-        span.style.transform = 'scale(1.5)';
-    }, 100);
-
-    // Remove the span after animation
-    setTimeout(() => {
-        wordCloud.removeChild(span);
-    }, 2000);
-}
-
-// Event listener for the button
-document.getElementById('new-sentence').addEventListener('click', animateWordCloud);
-
-// Initial animation
-animateWordCloud();
+    // Update quote every 10 seconds
+    setInterval(displayNextQuote, 10000);
+});
